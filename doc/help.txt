@@ -1,0 +1,61 @@
+Switch menu
+
+Author: tar80 <tar80master@google.com>
+License: MIT License
+Repository: https://github.com/tar80/ppm-switchmenu
+===============================================================================
+
+普段使わないメニューを登録しておいて、必要なときだけ呼び出して使えます。
+予めプリセットメニューを作っておけば幾つでも登録できます。
+
+===============================================================================
+構成ファイルの説明
+
+	sheet\dividemode.cfg	ファイル振り分けモード用のメニュー
+	sheet\ppm.cfg		ppmコマンドをまとめたメニュー
+
+===============================================================================
+テーブル情報
+
+	M_ppmSwitch	スイッチメニュー
+	M_ppmSwitchSub	スイッチメニュー内で展開されるプリセットメニュー
+	K_ppmSwitchKey	プリセットメニュー項目が使用する一時登録キー設定
+
+===============================================================================
+デフォルトキー設定
+
+	PPc
+		T	スイッチメニュー
+
+===============================================================================
+プリセットメニュー
+
+	ppm	ppmコマンドをまとめたメニュー
+		ppmメニューを利用するなら、ppm\cache\xxx\config\ppx-plugin-
+		maneger.cfgの*ppmコマンドは全て削除してしまっても構いません。
+		元に戻したいときは、メニューの&Load default pluginで戻せます。
+
+	M_ppmSwitchSub = {
+	&Edit plugin setting	指定したプラグインの設定を編集後、PPxに登録確認
+				 ※指定なしの場合、ppmの設定を編集
+	&Compare plugin settin	指定したプラグインの設定をデフォルト設定と比較
+				 ※指定なしの場合、ppmの設定を比較
+	&Load default plugin	指定したプラグインの設定をデフォルト状態に戻す
+	&Unset plugin setting	指定したプラグインの設定をPPxから削除
+	&Edit list		cache\list内の指定ファイルを編集
+	&Manege local-cfg	ppmで管理するPPx設定ファイルを選択
+	--
+	&Install plugins	_pluginlistに登録したプラグインをインストール
+	&Setup registered..	登録済みの全プラグイン設定をppxに読み込む
+	&Unset registered..	登録済みの全プラグイン設定をppxから削除
+	--
+	&Help plugin		指定したプラグインのヘルプドキュメントを表示
+	&Usage information	プラグインの登録状態を表示
+	--
+	&Initial PPx		PPxを初期化
+	&Reset PPx		PPxを初期化後、ppmの登録状態を復元
+	&Backup cfg		現在のPPxの設定を日付.cfgに保存
+	&Load cfg		選択した日付.cfgを読み込む
+	}
+
+DivideMode	ファイル振り分けモード
