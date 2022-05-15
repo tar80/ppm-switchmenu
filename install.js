@@ -85,7 +85,8 @@ var moduleNames = (function () {
 
 if (g_dryrun === 0 && COPY_FLAG) {
   try {
-    var config_dir = PPx.Extract('%*getcust(S_ppm#global:cache)') + '\\list\\';
+    var config_dir = PPx.Extract('%*getcust(S_ppm#global:cache)') + '\\switchmenu\\';
+    PPx.Execute('*makedir ' + config_dir);
     fso.CopyFile(wd + '\\sheet\\*', config_dir, false);
   } catch (_err) {
     null;

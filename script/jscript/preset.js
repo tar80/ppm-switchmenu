@@ -22,7 +22,7 @@ var module = function (filepath) {
 };
 
 // Load module
-var util = module(PPx.Extract('%*getcust(S_ppm#global:ppm)\\module\\jscript\\util.js'));
+var util = module(PPx.Extract('%*getcust(S_ppm#global:module)\\util.js'));
 module = null;
 
 PPx.Execute('*wait 200,2');
@@ -64,9 +64,18 @@ var table = (function (name, cache) {
 var lines = (function (cache, t) {
   var path = cache + '\\config\\ppm-switchmenu.cfg';
   var result = util.lines(path);
-  var index = result.data.findIndex(function (v) {
-    return /^[^\s]+SwitchMenu\s=.+/.test(v);
-  });
+  var index = (function () {
+    var thisLine;
+    var reg = /^[^\s]+SwitchMenu\s=.+/;
+
+    for (var i = 0, l = result.data.length; i < l; i++) {
+      thisLine = result.data[i];
+
+      if (reg.test(thisLine)) {
+        return i;
+      }
+    }
+  })();
   var ele = '&;9:' + t.prop + '\t= ' + t.value;
 
   result.data.splice(index, 0, ele);

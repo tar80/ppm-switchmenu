@@ -24,7 +24,7 @@ let module = function (filepath) {
 };
 
 // Load module
-const util = module(PPx.Extract('%*getcust(S_ppm#global:ppm)\\module\\jscript\\util.js'));
+const util = module(PPx.Extract('%*getcust(S_ppm#global:module)\\util.js'))
 module = null;
 
 PPx.Execute('*wait 200,2');
