@@ -32,7 +32,7 @@ Repository: https://github.com/tar80/ppm-switchmenu
 
 	ppm	ppmコマンドをまとめたメニュー
 		ppmメニューを利用するなら、ppm\cache\xxx\config\ppx-plugin-
-		maneger.cfgの*ppmコマンドは全て削除してしまっても構いません。
+		manager.cfgの*ppmコマンドは全て削除してしまっても構いません。
 		元に戻したいときは、メニューの&Load default pluginで戻せます。
 
 	M_ppmSwitchSub = {
@@ -43,7 +43,7 @@ Repository: https://github.com/tar80/ppm-switchmenu
 	&Load default plugin	指定したプラグインの設定をデフォルト状態に戻す
 	&Unset plugin setting	指定したプラグインの設定をPPxから削除
 	&Edit list		cache\list内の指定ファイルを編集
-	&Manege local-cfg	ppmで管理するPPx設定ファイルを選択
+	&Manage local-cfg	ppmで管理するPPx設定ファイルを選択
 	--
 	&Install plugins	_pluginlistに登録したプラグインをインストール
 	&Setup registered..	登録済みの全プラグイン設定をppxに読み込む

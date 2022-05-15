@@ -1,6 +1,6 @@
 # ppm-switchmenu
 
-ppx-plugin-maneger用のプラグインです。  
+ppx-plugin-manager用のプラグインです。  
 プリセットメニューの入れ換えができます。  
 ppmコマンド、ファイル振り分けモードのプリセットメニューを同梱しています。  
 
