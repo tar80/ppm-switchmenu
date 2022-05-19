@@ -1,0 +1,31 @@
+﻿PPM_PLUGIN_NAME=ppm-switchmenu
+
+#Requires ppm version
+PPM_VERSION=0.13
+
+#Requires ppx version
+PPX_VERSION=18403
+
+#Requires ppx script module version
+SCRIPT_VERSION=18
+
+#Requires external executables. separated dy commas
+EXECUTABLES=
+
+#Requires ppx-modules. separated dy commas
+MODULES=
+
+#Comma separated dependent plugins. just a note
+DEPENDENCIES=
+
+#Codetype permisson. 0:no restriction | 1:not use multibyte | 2:not use unicode
+CODETYPE_PERMISSION=1
+
+#Scripttype permisson. 0:no restriction | 1:js9(5.7) | 2:js9(5.8) | 3:js9(es5) | 4:chakra(es6)
+SCRIPTTYPE_PERMISSION=0
+
+#To copy files in the sheet directory. true | false
+COPY_FLAG=false
+
+#Copy by specifying the directory-name
+SPECIFIC_COPY_DIR=switchmenu
