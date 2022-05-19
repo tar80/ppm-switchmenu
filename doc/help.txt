@@ -11,8 +11,12 @@ Repository: https://github.com/tar80/ppm-switchmenu
 ===============================================================================
 構成ファイルの説明
 
-	sheet\dividemode.cfg	ファイル振り分けモード用のメニュー
-	sheet\ppm.cfg		ppmコマンドをまとめたメニュー
+	switchmenu\dividemode.cfg	ファイル振り分けモード用のメニュー
+	switchmenu\ppm.cfg		ppmコマンドをまとめたメニュー
+	switchmenu\switchmenu.cfg	プリセットメニューの編集用のメニュー
+	script\preset.js	設定ファイルswitchmenu.cfg内プリセットメニュー
+        			"SwitchMenu"を探し一つ前の行に新規メニューを
+				追加する
 
 ===============================================================================
 テーブル情報
@@ -41,11 +45,13 @@ Repository: https://github.com/tar80/ppm-switchmenu
 	&Compare plugin settin	指定したプラグインの設定をデフォルト設定と比較
 				 ※指定なしの場合、ppmの設定を比較
 	&Load default plugin	指定したプラグインの設定をデフォルト状態に戻す
+	&Set plugin		指定したプラグインの設定をPPxに追加
 	&Unset plugin setting	指定したプラグインの設定をPPxから削除
 	&Edit list		cache\list内の指定ファイルを編集
 	&Manage local-cfg	ppmで管理するPPx設定ファイルを選択
 	--
 	&Install plugins	_pluginlistに登録したプラグインをインストール
+	&Unpdate plugins	_pluginlistに登録したプラグインをアップデート
 	&Setup registered..	登録済みの全プラグイン設定をppxに読み込む
 	&Unset registered..	登録済みの全プラグイン設定をppxから削除
 	--
@@ -56,6 +62,16 @@ Repository: https://github.com/tar80/ppm-switchmenu
 	&Reset PPx		PPxを初期化後、ppmの登録状態を復元
 	&Backup cfg		現在のPPxの設定を日付.cfgに保存
 	&Load cfg		選択した日付.cfgを読み込む
+	--
+	&Uninstall ppm		ppmをアンインストール
 	}
 
 DivideMode	ファイル振り分けモード
+
+SwitchMenu	プリセットメニューの編集
+
+	M_ppmSwitchSub = {
+	&Edit preset menu	プリセットメニュー編集
+	%Create menu		新しくプリセットメニューを作成し
+				config\ppm-switchmenu.cfgに追加する
+	}
