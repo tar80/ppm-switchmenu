@@ -60,11 +60,16 @@ const table = ((name = g_args.name, cache = cache_dir) => {
   };
 })();
 
-const lines = ((cache = cache_dir, t = table) => {
+const lines = ((cache = cache_dir, t = table, dryrun = g_args.dryrun) => {
   const path = `${cache}\\config\\ppm-switchmenu.cfg`;
   const result = util.lines(path);
   const index = result.data.findIndex((v) => /^[^\s]+SwitchMenu\s=.+/.test(v));
   const ele = `&;9:${t.prop}\t= ${t.value}`;
+
+  if (index === -1) {
+    dryrun !== 0 && PPx.Echo('Not found preset SwitchMenu');
+    PPx.Quit(1);
+  }
 
   result.data.splice(index, 0, ele);
   return {filepath: path, data: result.data, newline: result.newline};

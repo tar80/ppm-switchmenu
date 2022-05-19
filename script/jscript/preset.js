@@ -61,7 +61,7 @@ var table = (function (name, cache) {
   };
 })(g_args.name, cache_dir);
 
-var lines = (function (cache, t) {
+var lines = (function (cache, t, dryrun) {
   var path = cache + '\\config\\ppm-switchmenu.cfg';
   var result = util.lines(path);
   var index = (function () {
@@ -75,12 +75,19 @@ var lines = (function (cache, t) {
         return i;
       }
     }
+
+    return null;
   })();
   var ele = '&;9:' + t.prop + '\t= ' + t.value;
 
+  if (index === null) {
+    dryrun !== 0 && PPx.Echo('Not found preset SwitchMenu');
+    PPx.Quit(1);
+  }
+
   result.data.splice(index, 0, ele);
   return {filepath: path, data: result.data, newline: result.newline};
-})(cache_dir, table);
+})(cache_dir, table, g_args.dryrun);
 
 g_args.dryrun
   ? PPx.Echo(lines.data.join(lines.newline))
