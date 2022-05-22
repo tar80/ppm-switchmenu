@@ -14,8 +14,11 @@ Repository: https://github.com/tar80/ppm-switchmenu
 	switchmenu\dividemode.cfg	ファイル振り分けモード用のメニュー
 	switchmenu\ppm.cfg		ppmコマンドをまとめたメニュー
 	switchmenu\switchmenu.cfg	プリセットメニューの編集用のメニュー
-	script\preset.js	設定ファイルswitchmenu.cfg内プリセットメニュー
-        			"SwitchMenu"を探し一つ前の行に新規メニューを
+	script\compare.js	ユーザープリセットメニューとデフォルトプリセット
+				メニューを比較する
+				ユーザー独自のプリセットメニューは比較できない
+	script\preset.js	設定ファイルswitchmenu.cfg内のプリセット
+				"SwitchMenu"を探し一つ前の行に新規メニューを
 				追加する
 
 ===============================================================================
@@ -33,6 +36,10 @@ Repository: https://github.com/tar80/ppm-switchmenu
 
 ===============================================================================
 プリセットメニュー
+
+プリセットメニューはメニューごとに分割されたPPx設定ファイルです。ファイルの
+一行目に";PLUGIN=<プラグイン名>"の記述が必要で、ユーザーメニューとデフォルト
+メニューの比較時に参照されます。
 
 	ppm	ppmコマンドをまとめたメニュー
 		ppmメニューを利用するなら、ppm\cache\xxx\config\ppx-plugin-
@@ -72,6 +79,8 @@ SwitchMenu	プリセットメニューの編集
 
 	M_ppmSwitchSub = {
 	&Edit preset menu	プリセットメニュー編集
+	&Compare preset menu	ユーザープリセットメニューとデフォルト
+				プリセットメニューを比較する
 	%Create menu		新しくプリセットメニューを作成し
-				config\ppm-switchmenu.cfgに追加する
+				config\ppm-switchmenu.cfgに項目を追加します
 	}
