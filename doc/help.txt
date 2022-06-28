@@ -24,6 +24,7 @@ Repository: https://github.com/tar80/ppm-switchmenu
 ===============================================================================
 テーブル情報
 
+	S_ppm#user:sw_cursor	メニューのカーソル位置(ショートカットキー)
 	M_ppmSwitch	スイッチメニュー
 	M_ppmSwitchSub	スイッチメニュー内で展開されるプリセットメニュー
 	K_ppmSwitchKey	プリセットメニュー項目が使用する一時登録キー設定
