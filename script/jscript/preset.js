@@ -44,7 +44,7 @@ var cache_dir = util.getc('S_ppm#global:cache');
 var table = (function (name, cache) {
   var path = cache + '\\switchmenu\\' + name + '.cfg';
 
-  var notExists = util.reply.call({name: 'exists'}, 'path', path);
+  var notExists = util.reply.call({name: 'exists'}, 'path', 'file', path);
 
   if (notExists !== '') {
     PPx.Quit(1);

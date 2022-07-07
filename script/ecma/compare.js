@@ -34,7 +34,7 @@ const user_menu = ((args = PPx.Arguments()) => {
   }
 
   const path = args.item(0);
-  const notExists = util.reply.call({name: 'exists'}, 'path', path);
+  const notExists = util.reply.call({name: 'exists'}, 'path', 'file', path);
 
   if (notExists !== '') {
     util.quitMsg(`Not exist\n${path}`);

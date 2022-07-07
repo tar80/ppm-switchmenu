@@ -34,7 +34,7 @@ var user_menu = (function (args) {
   }
 
   var path = args.item(0);
-  var notExists = util.reply.call({name: 'exists'}, 'path', path);
+  var notExists = util.reply.call({name: 'exists'}, 'path', 'file', path);
 
   if (notExists !== '') {
     util.quitMsg('Not exist\n' + path);

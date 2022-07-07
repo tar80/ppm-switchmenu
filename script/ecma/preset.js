@@ -24,7 +24,7 @@ let module = function (filepath) {
 };
 
 // Load module
-const util = module(PPx.Extract('%*getcust(S_ppm#global:module)\\util.js'))
+const util = module(PPx.Extract('%*getcust(S_ppm#global:module)\\util.js'));
 module = null;
 
 PPx.Execute('*wait 200,2');
@@ -46,7 +46,7 @@ const cache_dir = util.getc('S_ppm#global:cache');
 const table = ((name = g_args.name, cache = cache_dir) => {
   const path = `${cache}\\switchmenu\\${name}.cfg`;
 
-  const notExists = util.reply.call({name: 'exists'}, 'path', path);
+  const notExists = util.reply.call({name: 'exists'}, 'path', 'file', path);
 
   if (notExists !== '') {
     PPx.Quit(1);
