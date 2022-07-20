@@ -1,4 +1,5 @@
 ﻿//!*script
+// deno-lint-ignore-file no-var
 /**
  * Open the switch-menu configuration file and append a preset to the table
  *
@@ -35,10 +36,10 @@ var g_args = (function (args) {
   }
 
   return {
-    name: args.item(0),
-    dryrun: len > 1 ? args.item(1) | 0 : 0
+    name: args.Item(0),
+    dryrun: len > 1 ? args.Item(1) | 0 : 0
   };
-})(PPx.Arguments());
+})(PPx.Arguments);
 
 var cache_dir = util.getc('S_ppm#global:cache');
 var table = (function (name, cache) {
@@ -50,10 +51,12 @@ var table = (function (name, cache) {
     PPx.Quit(1);
   }
 
+  var shortcut = name.slice(0, 1).toUpperCase();
   var cmdline =
-    '*setcust @%*getcust(S_ppm#global:cache)\\switchmenu\\' +
+    '*setcust S_ppm#user:sw_cursor=' + shortcut + '%:*setcust @%*getcust(S_ppm#global:cache)\\switchmenu\\' +
     name +
-    '.cfg%:*execute ,%%M_ppmSwitch';
+    '.cfg%:*execute ,%%M_ppmSwitch,' +
+    shortcut
 
   return {
     prop: name,
@@ -63,13 +66,19 @@ var table = (function (name, cache) {
 
 var lines = (function (cache, t, dryrun) {
   var path = cache + '\\config\\ppm-switchmenu.cfg';
-  var result = util.lines(path);
-  var index = (function () {
+  var result = util.readLines(path);
+
+  var switchmenuLine = (function () {
     var thisLine;
+    var hasLine = new RegExp(t.prop + '\\s=');
     var reg = /^[^\s]+SwitchMenu\s=.+/;
 
     for (var i = 0, l = result.data.length; i < l; i++) {
       thisLine = result.data[i];
+
+      if (hasLine.test(thisLine) > 0) {
+        PPx.Quit(1);
+      }
 
       if (reg.test(thisLine)) {
         return i;
@@ -78,17 +87,22 @@ var lines = (function (cache, t, dryrun) {
 
     return null;
   })();
-  var ele = '&;9:' + t.prop + '\t= ' + t.value;
 
-  if (index === null) {
-    dryrun !== 0 && PPx.Echo('Not found preset SwitchMenu');
+  var ele = '&9:' + t.prop + '\t= ' + t.value;
+
+  if (switchmenuLine === null) {
+    dryrun !== 0 && PPx.report('No "SwitchMenu" line in ppm-switchmenu.cfg');
     PPx.Quit(1);
   }
 
-  result.data.splice(index, 0, ele);
-  return {filepath: path, data: result.data, newline: result.newline};
+  result.data.splice(switchmenuLine, 0, ele);
+  return {filepath: path, data: result.data, newline: result.newline, index: switchmenuLine};
 })(cache_dir, table, g_args.dryrun);
 
-g_args.dryrun
-  ? PPx.Echo(lines.data.join(lines.newline))
-  : util.write.apply({newline: lines.newline, filepath: lines.filepath}, lines.data);
+if (g_args.dryrun !== 0) {
+  PPx.Echo(lines.data.join(lines.newline));
+  PPx.Quit(1);
+}
+
+util.write.apply({newline: lines.newline, filepath: lines.filepath}, lines.data);
+PPx.SetPopLineMessage('Update ppm-switchmenu.cfg. Run *ppmEdit ppm-switchmenu');

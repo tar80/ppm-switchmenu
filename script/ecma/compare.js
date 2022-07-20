@@ -26,14 +26,14 @@ let module = function (filepath) {
 const util = module(PPx.Extract('%*getcust(S_ppm#global:module)\\util.js'));
 module = null;
 
-const user_menu = ((args = PPx.Arguments()) => {
+const user_menu = ((args = PPx.Arguments) => {
   const len = args.length;
 
   if (len < 1) {
     util.error('arg');
   }
 
-  const path = args.item(0);
+  const path = args.Item(0);
   const notExists = util.reply.call({name: 'exists'}, 'path', 'file', path);
 
   if (notExists !== '') {
@@ -45,7 +45,7 @@ const user_menu = ((args = PPx.Arguments()) => {
 })();
 
 const default_menu_path = (() => {
-  const lines = util.lines(user_menu.path);
+  const lines = util.readLines(user_menu.path);
   const reg = /^;\s*(PLUGIN)[\s=]+(.+)/;
   const result = lines.data[0].replace(reg, '$1=$2').split('=');
 

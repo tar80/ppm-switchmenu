@@ -29,7 +29,7 @@ module = null;
 
 PPx.Execute('*wait 200,2');
 
-const g_args = ((args = PPx.Arguments()) => {
+const g_args = ((args = PPx.Arguments) => {
   const len = args.length;
 
   if (len < 1) {
@@ -37,8 +37,8 @@ const g_args = ((args = PPx.Arguments()) => {
   }
 
   return {
-    name: args.item(0),
-    dryrun: len > 1 ? args.item(1) | 0 : 0
+    name: args.Item(0),
+    dryrun: len > 1 ? args.Item(1) | 0 : 0
   };
 })();
 
@@ -52,7 +52,8 @@ const table = ((name = g_args.name, cache = cache_dir) => {
     PPx.Quit(1);
   }
 
-  const cmdline = `*setcust @%*getcust(S_ppm#global:cache)\\switchmenu\\${name}.cfg%:*execute ,%%M_ppmSwitch`;
+  const shortcut = [...name][0].toUpperCase();
+  const cmdline = `*setcust S_ppm#user:sw_cursor=${shortcut}%:*setcust @%*getcust(S_ppm#global:cache)\\switchmenu\\${name}.cfg%:*execute ,%%M_ppmSwitch,${shortcut}`;
 
   return {
     prop: name,
@@ -62,19 +63,29 @@ const table = ((name = g_args.name, cache = cache_dir) => {
 
 const lines = ((cache = cache_dir, t = table, dryrun = g_args.dryrun) => {
   const path = `${cache}\\config\\ppm-switchmenu.cfg`;
-  const result = util.lines(path);
-  const index = result.data.findIndex((v) => /^[^\s]+SwitchMenu\s=.+/.test(v));
-  const ele = `&;9:${t.prop}\t= ${t.value}`;
+  const result = util.readLines(path);
+  const hasLine = new RegExp(`${t.prop}\\s=`);
 
-  if (index === -1) {
-    dryrun !== 0 && PPx.Echo('Not found preset SwitchMenu');
+  if (result.data.findIndex((v) => hasLine.test(v)) > 0) {
     PPx.Quit(1);
   }
 
-  result.data.splice(index, 0, ele);
-  return {filepath: path, data: result.data, newline: result.newline};
+  const switchmenuLine = result.data.findIndex((v) => /^.*SwitchMenu\s=.+/.test(v));
+  const ele = `&9:${t.prop}\t= ${t.value}`;
+
+  if (switchmenuLine === -1) {
+    dryrun !== 0 && PPx.report('No "SwitchMenu" line in ppm-switchmenu.cfg');
+    PPx.Quit(1);
+  }
+
+  result.data.splice(switchmenuLine, 0, ele);
+  return {filepath: path, data: result.data, newline: result.newline, index: switchmenuLine};
 })();
 
-g_args.dryrun
-  ? PPx.Echo(lines.data.join(lines.newline))
-  : util.write.apply({newline: lines.newline, filepath: lines.filepath}, lines.data);
+if (g_args.dryrun !== 0) {
+  PPx.Echo(lines.data.join(lines.newline));
+  PPx.Quit(1);
+}
+
+util.write.apply({newline: lines.newline, filepath: lines.filepath}, lines.data);
+PPx.SetPopLineMessage('Update ppm-switchmenu.cfg. Run *ppmEdit ppm-switchmenu');

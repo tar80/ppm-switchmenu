@@ -1,12 +1,11 @@
 ﻿//!*script
+// deno-lint-ignore-file no-var
 /**
  * Open the switch-menu configuration file and append a preset to the table
  *
  * @version 1.0
  * @arg 0 preset menu name
  */
-
-'use strict';
 
 /* Initial */
 // Read module
@@ -33,7 +32,7 @@ var user_menu = (function (args) {
     util.error('arg');
   }
 
-  var path = args.item(0);
+  var path = args.Item(0);
   var notExists = util.reply.call({name: 'exists'}, 'path', 'file', path);
 
   if (notExists !== '') {
@@ -42,10 +41,10 @@ var user_menu = (function (args) {
 
   var name = PPx.Extract('%*name(C,' + path + ')');
   return {name: name, path: path};
-})(PPx.Arguments());
+})(PPx.Arguments);
 
 var default_menu_path = (function () {
-  var lines = util.lines(user_menu.path);
+  var lines = util.readLines(user_menu.path);
   var reg = /^;\s*(PLUGIN)[\s=]+(.+)/;
   var result = lines.data[0].replace(reg, '$1=$2').split('=');
 
