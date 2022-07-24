@@ -1,14 +1,14 @@
 ﻿PPM_PLUGIN_NAME=ppm-switchmenu
 
 #Plugin version
-VERSION=2.0
+VERSION=2.1
 
 #Requires ppm version
 PPM_VERSION=0.8
 PPMCV8_VERSION=0.01
 
 #Requires PPx version
-PPX_VERSION=18506
+PPX_VERSION=186
 
 #Requires PPx script module version
 SCRIPT_VERSION=18

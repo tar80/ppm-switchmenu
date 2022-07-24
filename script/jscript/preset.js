@@ -105,4 +105,7 @@ if (g_args.dryrun !== 0) {
 }
 
 util.write.apply({newline: lines.newline, filepath: lines.filepath}, lines.data);
-PPx.SetPopLineMessage('Update ppm-switchmenu.cfg. Run *ppmEdit ppm-switchmenu');
+PPx.Execute(
+  '%"ppx-plugin-manager"%Q"Update ppm-switchmenu.cfg. Run *ppmEdit now?%:' +
+    '*script %*getcust(S_ppm#global:ppm)\\script\\jscript\\set.js,ppm-switchmenu,user,editor'
+);

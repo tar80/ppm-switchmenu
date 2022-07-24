@@ -27,8 +27,6 @@ let module = function (filepath) {
 const util = module(PPx.Extract('%*getcust(S_ppm#global:module)\\util.js'));
 module = null;
 
-PPx.Execute('*wait 200,2');
-
 const g_args = ((args = PPx.Arguments) => {
   const len = args.length;
 
@@ -46,6 +44,8 @@ const cache_dir = util.getc('S_ppm#global:cache');
 const table = ((name = g_args.name, cache = cache_dir) => {
   const path = `${cache}\\switchmenu\\${name}.cfg`;
 
+  PPx.Execute(`*execute ,%*getcust(S_ppm#user:editor) ${path}%%&`);
+
   const notExists = util.reply.call({name: 'exists'}, 'path', 'file', path);
 
   if (notExists !== '') {
@@ -53,7 +53,11 @@ const table = ((name = g_args.name, cache = cache_dir) => {
   }
 
   const shortcut = [...name][0].toUpperCase();
-  const cmdline = `*setcust S_ppm#user:sw_cursor=${shortcut}%:*setcust @%*getcust(S_ppm#global:cache)\\switchmenu\\${name}.cfg%:*execute ,%%M_ppmSwitch,${shortcut}`;
+  const cmdline =
+    `*setcust S_ppm#user:sw_cursor=${shortcut}\n` +
+    '\t*setcust S_ppm#user:sw_check=8\n' +
+    `\t*setcust @%*getcust(S_ppm#global:cache)\\switchmenu\\${name}.cfg\n` +
+    `\t*execute ,%%M_ppmSwitch,"?c:%*getcust(S_ppm#uset:sw_check);${shortcut}"`;
 
   return {
     prop: name,
@@ -88,4 +92,7 @@ if (g_args.dryrun !== 0) {
 }
 
 util.write.apply({newline: lines.newline, filepath: lines.filepath}, lines.data);
-PPx.SetPopLineMessage('Update ppm-switchmenu.cfg. Run *ppmEdit ppm-switchmenu');
+PPx.Execute(
+  '%"ppx-plugin-manager"%Q"Update ppm-switchmenu.cfg. Run *ppmEdit now?%:' +
+    '*script %*getcust(S_ppm#global:ppm)\\script\\jscript\\set.js,ppm-switchmenu,user,editor'
+);
