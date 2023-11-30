@@ -1,4 +1,4 @@
-/* @file Add the new menu item
+/* @file Add a new menu item
  * @arg 0 {number} - If non-zero, edit the specified SwitchMenu configuration file
  */
 
