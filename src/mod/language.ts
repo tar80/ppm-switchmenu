@@ -5,7 +5,7 @@ export const langAdd = {
     edit: 'Start editing switchmenu.cfg',
     register: 'Update plugin settings'
   },
-  jp: {
+  ja: {
     title: '新規メニュー名を指定',
     hasMenu: 'はすでに登録されています',
     edit: 'switchmenu.cfgの編集を開始します',
@@ -20,7 +20,7 @@ export const langCompare = {
     couldNotGet: 'Could not get plugin name',
     failedToGet: 'Failed to get plugin information for comparison',
   },
-  jp: {
+  ja: {
     title: 'プラグイン名を指定',
     notExists: 'はありません',
     couldNotGet: 'プラグイン名を取得できませんでした',

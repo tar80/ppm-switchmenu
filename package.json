@@ -1,6 +1,6 @@
 {
   "name": "@ppmdev/ppm-switchmenu",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "description": "Menu switcher",
   "type": "module",
   "directories": {

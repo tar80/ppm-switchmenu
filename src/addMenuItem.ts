@@ -3,12 +3,13 @@
  */
 
 import fso, {copyFile} from '@ppmdev/modules/filesystem.ts';
-import {isError, isEmptyStr} from '@ppmdev/modules/guard.ts';
+import {isEmptyStr} from '@ppmdev/modules/guard.ts';
 import {readLines, writeLines} from '@ppmdev/modules/io.ts';
 import {useLanguage} from '@ppmdev/modules/data.ts';
 import {pathSelf} from '@ppmdev/modules/path.ts';
 import {ppm} from '@ppmdev/modules/ppm.ts';
 import {langAdd} from './mod/language.ts';
+import {safeArgs} from '@ppmdev/modules/argument.ts';
 import debug from '@ppmdev/modules/debug.ts';
 
 const {scriptName, parentDir} = pathSelf();
@@ -26,7 +27,7 @@ const editor = ppm.getcust('S_ppm#user:editor')[1];
 if (!fso.FileExists(userMenuPath)) {
   const sourcePath = `${parentDir}\\..\\template\\newmenu.cfg`;
   copyFile(sourcePath, userMenuPath);
-  PPx.Execute(`${editor} ${userMenuPath}`)
+  PPx.Execute(`${editor} ${userMenuPath}`);
   PPx.Quit(1);
 }
 
@@ -34,7 +35,7 @@ const main = (): void => {
   const path = `${ppmcache}\\config\\ppm-switchmenu.cfg`;
   const [error, data] = readLines({path});
 
-  if (isError(error, data)) {
+  if (error) {
     ppm.echo(scriptName, data);
     PPx.Quit(-1);
   }
@@ -50,7 +51,9 @@ const main = (): void => {
   data.lines.splice(lineNumber, 0, ...contents);
   writeLines({path, data: data.lines, overwrite: true});
 
-  if (PPx.Arguments.length && PPx.Arguments.Item(0) !== '0') {
+  const [isEdit] = safeArgs(false);
+
+  if (isEdit) {
     if (ppm.question(scriptName, lang.edit)) {
       PPx.Execute(`${editor} "${path}"`);
       const ok = ppm.question(scriptName, lang.register);
@@ -73,7 +76,7 @@ const getMenuItems = (data: string[]): typeof items => {
           return items;
         }
 
-        if (~(line.toLowerCase()).indexOf(itemName.toLowerCase())) {
+        if (~line.toLowerCase().indexOf(itemName.toLowerCase())) {
           return [];
         }
 
@@ -88,7 +91,7 @@ const getMenuItems = (data: string[]): typeof items => {
 };
 
 const createCmdline = (items: MenuItem[]): [number, string[]] => {
-  debug.log(JSON.stringify(items))
+  debug.log(JSON.stringify(items));
   const prefix = Number(items[items.length - 2].prefix);
   const lines = [
     `&${prefix + 1}:${itemName}\t= *setcust @%sgu'ppmcache'\\switchmenu\\${itemName}.cfg`,

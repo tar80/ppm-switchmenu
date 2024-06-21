@@ -1,7 +1,7 @@
 /* @file Compare preset menu differences */
 
 import fso from '@ppmdev/modules/filesystem.ts';
-import {isEmptyStr, isError} from '@ppmdev/modules/guard.ts';
+import {isEmptyStr} from '@ppmdev/modules/guard.ts';
 import {readLines} from '@ppmdev/modules/io.ts';
 import {useLanguage} from '@ppmdev/modules/data.ts';
 import {pathSelf} from '@ppmdev/modules/path.ts';
@@ -28,7 +28,7 @@ if (errorlevel !== 0 || isEmptyStr(userMenuPath)) {
 
 const [error, data] = readLines({path: userMenuPath});
 
-if (isError(error, data)) {
+if (error) {
   ppm.echo(scriptName, data);
   PPx.Quit(-1);
 }
